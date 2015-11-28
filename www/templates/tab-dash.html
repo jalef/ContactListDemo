@@ -1,0 +1,21 @@
+<ion-view view-title="Dashboard">
+  <ion-content class="padding">
+    <div class="list card">
+      <p>{{message}}</p>
+      <div class="item item-divider">Battery Status</div>
+      <div class="item item-body">
+        <div>
+          <!--<progress ng-controller="batteryController" max="100" value="{{battery.levell}}">
+          </progress>-->
+          Your battery level is  <b>{{batteryLevel}} %</b>.
+          <p ng-show="battery.level<=15 && !isPluggedIn">
+            You might want to connect your charger!
+          </p>
+          <p ng-show="isPluggedIn">
+            Your phone is charging right now!
+          </p>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
