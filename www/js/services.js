@@ -48,7 +48,7 @@ angular.module('contactListApp.services', [])
     }
   };
 })
-.factory('DashService', function() {
+.factory('DashService', function($cordovaDevice) {
   // Might use a resource here that returns a JSON array
 
   var batteryPercent=3;
