@@ -1,9 +1,43 @@
-<ion-view view-title="Account">
+<!--<ion-view view-title="Account">
   <ion-content>
     <ion-list>
     <ion-toggle  ng-model="settings.enableFriends">
         Enable Friends
     </ion-toggle>
     </ion-list>
+  </ion-content>
+</ion-view>-->
+
+<ion-view view-title="Settings">
+  <ion-content>
+    <form ng-submit="saveSettings()">
+      <div class="list">
+        <label class="item item-input">
+          <div class="input-label">
+            FirstName:
+          </div>
+          <input type="text" 
+              placeholder="First Name" 
+              ng-model="firstName">
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Background color:
+          </div>
+          <select ng-model="bgColor">
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+            <option value="white">White</option>
+            <option value="red">Red</option>
+            <option value="yellow">Yellow</option>
+          </select>
+        </label>
+  
+      </div> 
+      
+      <button type="submit" class="button button-positive">
+        Save
+      </button> 
+    </form>
   </ion-content>
 </ion-view>

@@ -5,9 +5,25 @@ angular.module('contactListApp.controllers', [])
       $ionicPlatform, 
       $cordovaBatteryStatus,
       $cordovaDevice,
-      $cordovaContacts) {
-    $scope.message="Wellcome";
+      $cordovaContacts,
+      $localstorage) {
+     
+    var tempLocalstorage=$localstorage.get('firstName');
+    $scope.firstName=(tempLocalstorage?
+        tempLocalstorage:
+        "Guest");
+        
+    tempLocalstorage=$localstorage.get('bgColor');
+    $scope.bgColor=(tempLocalstorage?    
+       tempLocalstorage:
+       "white" );
+    
+    $scope.refreshSettings=function() {
+      $scope.firstName= $localstorage.get('firstName');
+    }
+    
     $scope.contactsCount=0;
+    
     $ionicPlatform.ready(function() {
       $rootScope.$on("$cordovaBatteryStatus:status",
         function(event, args){
@@ -23,60 +39,45 @@ angular.module('contactListApp.controllers', [])
           $scope.contactsCount = result.length;
       }, function(error) {
           console.log("ERROR: " + error);
-      });
-     
-
-
-      //}, false);         
-    });
+      });        
+    }); 
     
-    // $scope.getAllContacts = function() {
-    //   $cordovaContacts.find().then(function(allContacts) { 
-    //     $scope.contacts = allContacts;
-    //   });
-    // };
-    
-    //$cordovaContacts.find().then(function(allContacts) { 
-        //$scope.contactsCount=allContacts.length;
-        //$scope.contacts = allContacts;
-    //});
-    
-    
+    // $scope.doRefresh = function() {
+    //   $scope.message="Wellcome " + 
+    //     ($localstorage.get('firstName')?
+    //     $localstorage.get('firstName'):
+    //     "Guest");
+    //   $scope.$broadcast('scroll.refreshComplete');
+    //   $scope.$apply()
+    // }; 
 })
 .controller('ContactsCtrl', 
 function($scope, $cordovaContacts) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  // $scope.chats = Chats.all();
-  // $scope.remove = function(chat) {
-  //   Chats.remove(chat);
-  // };
- 
-    $scope.message="Contacts";
-    // $scope.contactsCount=0;
-     
-    // $scope.getContactList = function() {
-        $cordovaContacts.find({filter: ''}).then(function(result) {
-            $scope.contacts = result;
-            $scope.count=result.length;
-        }, function(error) {
-            console.log("ERROR: " + error);
-        }
-        )
-    // };
+  $scope.message="Contacts";
+  
+  $cordovaContacts.find({filter: ''}).then(function(result) {
+      $scope.contacts = result;
+      $scope.count=result.length;
+  }, function(error) {
+      console.log("ERROR: " + error);
+  });
 })
+.controller('SettingsCtrl', function($scope,$localstorage) {
+  $scope.firstName=$localstorage.get('firstName');
+  $scope.bgColor=$localstorage.get('bgColor');
 
-// .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-//   $scope.chat = Chats.get($stateParams.chatId);
-// })
-.controller('SettingsCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+  $scope.saveSettings=function(){
+    // $localstorage.set('firstName', $scope.firstName); 
+    $localstorage.set('firstName', this.firstName); 
+     $localstorage.set('bgColor', this.bgColor);
+  }
+  
+  // $scope.$watch("firstName",function(newValue,oldValue) {
+  //   $localstorage.set('firstName', newValue); 
+  //   alert(newValue + "|" + oldValue);   
+  // });
+  // $scope.$watch("backgroundColor",function(newValue,oldValue) {
+  //   $localstorage.set('bgColor', newValue);
+  //   alert(newValue + "|" + oldValue);    
+  // });
 });

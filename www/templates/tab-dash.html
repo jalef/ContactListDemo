@@ -1,53 +1,63 @@
-<ion-view view-title="Dashboard">
-  <ion-content class="padding">
-    <p>{{message}}</p>
-    <div class="list card">
+<ion-view  cache-view="false"" view-title="Dashboard">
+  <ion-content class="padding" 
+      style="background-color:{{bgColor}}">
+    <div>
+    <!--<ion-refresher on-refresh="doRefresh()"
+                    pulling-text="Pull to refresh..."
+                    refreshing-text="Refreshing!"
+                    refreshing-icon="ion-loading-c">
+    </ion-refresher>-->
       
-      <div class="item item-divider">Battery Status</div>
-      <div class="item item-body"><!--qq this or ion-item?-->
-        <div>
-          <!--<progress ng-controller="batteryController" max="100" value="{{battery.levell}}">
-          </progress>-->
-          <p>
-            Your battery level is  <b>{{batteryLevel}} %</b>.
-          </p>
-          <p ng-show="battery.level<=15 && !isPluggedIn">
-            You might want to connect your charger!
-          </p>
-          <p ng-show="isPluggedIn">
-            Your phone is charging right now!
-          </p>
+      <div class="item item-divider">Wellcome {{firstName}}</div>
+
+      <div class="list card">    
+        <div class="item item-divider">Battery Status</div>
+        <div class="item item-body"><!--qq this or ion-item?-->
+          <div>
+            <!--<progress ng-controller="batteryController" max="100" value="{{battery.levell}}">
+            </progress>-->
+            <p>
+              Your battery level is  <b>{{batteryLevel}} %</b>.
+            </p>
+            <p ng-show="battery.level<=15 && !isPluggedIn">
+              You might want to connect your charger!
+            </p>
+            <p ng-show="isPluggedIn">
+              Your phone is charging right now!
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="list card">
+        <div class="item item-divider">Device Information</div>
+        <div class="item item-body">
+          <div>
+            <!--<progress ng-controller="batteryController" max="100" value="{{battery.levell}}">
+            </progress>-->
+            <p>
+              Your device model is  <b>{{model}}</b>.
+            </p>
+            <p>
+              Your running on  <b>{{platform }}</b> platform.
+            </p>
+          </div>
+        </div>
+      </div>
+    
+      <div class="list card">
+        <div class="item item-divider">Contacts</div>
+        <div class="item item-body">
+          <div>
+            <p>
+              Your have <b>{{contactsCount}}</b> contacts in your device.
+            </p>
+            
+          </div>
         </div>
       </div>
     </div>
-    
-    <div class="list card">
-      <div class="item item-divider">Device Information</div>
-      <div class="item item-body">
-        <div>
-          <!--<progress ng-controller="batteryController" max="100" value="{{battery.levell}}">
-          </progress>-->
-          <p>
-            Your device model is  <b>{{model}}</b>.
-          </p>
-          <p>
-            Your running on  <b>{{platform }}</b> platform.
-          </p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="list card">
-      <div class="item item-divider">Contacts</div>
-      <div class="item item-body">
-        <div>
-          <p>
-            Your have <b>{{contactsCount}}</b> contacts in your device.
-          </p>
-          
-        </div>
-      </div>
-    </div>
-    
   </ion-content>
 </ion-view>
+
+  
