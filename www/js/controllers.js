@@ -62,7 +62,7 @@ function($scope, $cordovaContacts) {
       console.log("ERROR: " + error);
   });
 })
-.controller('SettingsCtrl', function($scope,$localstorage) {
+.controller('SettingsCtrl', function($scope,$localstorage,$cordovaSQLite) {
   $scope.firstName=$localstorage.get('firstName');
   $scope.bgColor=$localstorage.get('bgColor');
 
@@ -70,7 +70,24 @@ function($scope, $cordovaContacts) {
     // $localstorage.set('firstName', $scope.firstName); 
     $localstorage.set('firstName', this.firstName); 
      $localstorage.set('bgColor', this.bgColor);
+     
+     
+     var db = $cordovaSQLite.openDB({ name: "my.db" });
+
+        // for opening a background db:
+      var db = $cordovaSQLite.openDB({ name: "my.db", bgType: 1 });
+    
+      $scope.execute = function() {
+        var query = "INSERT INTO test_table (data, data_num) VALUES (?,?)";
+        $cordovaSQLite.execute(db, query, ["test", 100]).then(function(res) {
+          console.log("insertId: " + res.insertId);
+        }, function (err) {
+          console.error(err);
+        });
+      };
   }
+  
+  
   
   // $scope.$watch("firstName",function(newValue,oldValue) {
   //   $localstorage.set('firstName', newValue); 

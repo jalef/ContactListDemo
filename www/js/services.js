@@ -47,7 +47,7 @@ angular.module('contactListApp.services', [])
       return null;
     }
   };
-})
+})//singleton
 .factory('DashService', function($cordovaDevice) {
   // Might use a resource here that returns a JSON array
 
