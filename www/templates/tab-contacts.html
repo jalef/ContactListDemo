@@ -5,7 +5,9 @@
       <div class="item item-divider">{{contact.displayName}} </div>
       <div class="item item-body"><!--qq this or ion-item?-->
         <div>
+          {{contact.phoneNumbers.length}}
           <p ng-show="contact.phoneNumbers[0]">
+            
             <b>Phone Number :</b> {{contact.phoneNumbers[0].value}}
           </p>
           <p ng-show="contact.emails[0]">

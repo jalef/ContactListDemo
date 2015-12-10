@@ -9,6 +9,7 @@ angular.module('contactListApp.controllers', [])
       $localstorage) {
      
     var tempLocalstorage=$localstorage.get('firstName');
+    console.log("logged");
     $scope.firstName=(tempLocalstorage?
         tempLocalstorage:
         "Guest");
@@ -34,10 +35,11 @@ angular.module('contactListApp.controllers', [])
     
       $scope.model = $cordovaDevice.getModel();  
       $scope.platform = $cordovaDevice.getPlatform();  
-     
-      $cordovaContacts.find({filter: ''}).then(function(result) {
-          $scope.contactsCount = result.length;
+      
+      $cordovaContacts.contacts.find({hasPhoneNumber:true}).then(function(result) {
+          $scope.contactsCount = result.length;     
       }, function(error) {
+        debugger
           console.log("ERROR: " + error);
       });        
     }); 
@@ -51,17 +53,26 @@ angular.module('contactListApp.controllers', [])
     //   $scope.$apply()
     // }; 
 })
-.controller('ContactsCtrl', 
-function($scope, $cordovaContacts) {
-  $scope.message="Contacts";
+
+
+.controller('ContactsCtrl',function($scope, 
+    $cordovaContacts,
+    $ionicPlatform) {
+      var opts = {                                           
+        filter : ''              
+      };
   
-  $cordovaContacts.find({filter: ''}).then(function(result) {
-      $scope.contacts = result;
-      $scope.count=result.length;
-  }, function(error) {
-      console.log("ERROR: " + error);
-  });
+      //if ($ionicPlatform.isAndroid()) {
+        opts.hasPhoneNumber = true;         //hasPhoneNumber only works for android.
+      //};
+      $cordovaContacts.find(opts).then(function(result) {
+          $scope.contacts = result;
+      }, function(error) {
+          debugger
+          console.log("ERROR: " + error);
+      });
 })
+
 .controller('SettingsCtrl', function($scope,$localstorage,$cordovaSQLite) {
   $scope.firstName=$localstorage.get('firstName');
   $scope.bgColor=$localstorage.get('bgColor');
@@ -86,15 +97,5 @@ function($scope, $cordovaContacts) {
         });
       };
   }
-  
-  
-  
-  // $scope.$watch("firstName",function(newValue,oldValue) {
-  //   $localstorage.set('firstName', newValue); 
-  //   alert(newValue + "|" + oldValue);   
-  // });
-  // $scope.$watch("backgroundColor",function(newValue,oldValue) {
-  //   $localstorage.set('bgColor', newValue);
-  //   alert(newValue + "|" + oldValue);    
-  // });
+
 });
