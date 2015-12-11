@@ -2,20 +2,12 @@
   <ion-content class="padding" 
       style="background-color:{{bgColor}}">
     <div>
-    <!--<ion-refresher on-refresh="doRefresh()"
-                    pulling-text="Pull to refresh..."
-                    refreshing-text="Refreshing!"
-                    refreshing-icon="ion-loading-c">
-    </ion-refresher>-->
-      
       <div class="item item-divider">Wellcome {{firstName}}</div>
 
       <div class="list card">    
         <div class="item item-divider">Battery Status</div>
-        <div class="item item-body"><!--qq this or ion-item?-->
+        <div class="item item-body">
           <div>
-            <!--<progress ng-controller="batteryController" max="100" value="{{battery.levell}}">
-            </progress>-->
             <p>
               Your battery level is  <b>{{batteryLevel}} %</b>.
             </p>
@@ -33,13 +25,11 @@
         <div class="item item-divider">Device Information</div>
         <div class="item item-body">
           <div>
-            <!--<progress ng-controller="batteryController" max="100" value="{{battery.levell}}">
-            </progress>-->
             <p>
               Your device model is  <b>{{model}}</b>.
             </p>
             <p>
-              Your running on  <b>{{platform }}</b> platform.
+              You are running on  <b>{{platform }}</b> platform.
             </p>
           </div>
         </div>
@@ -51,8 +41,7 @@
           <div>
             <p>
               Your have <b>{{contactsCount}}</b> contacts in your device.
-            </p>
-            
+            </p>           
           </div>
         </div>
       </div>

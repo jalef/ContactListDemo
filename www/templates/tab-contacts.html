@@ -1,6 +1,5 @@
 <ion-view view-title="Contacts">
   <ion-content>
-    <!--<button class="button" ng-click="getContactList()">Load</button>-->
     <div class="list card" ng-repeat="contact in contacts">
       <div class="item item-divider">{{contact.displayName}} </div>
       <div class="item item-body"><!--qq this or ion-item?-->
@@ -16,29 +15,5 @@
         </div>
       </div>
     </div>
-    
-    <!--<ion-list>-->
-      
-      <!--<ion-item class="item-remove-animate item-avatar item-icon-right"
-          ng-repeat="chat in chats"
-          type="item-text-wrap" 
-          href="#/tab/chats/{{chat.id}}">-->
-        <!--<img ng-src="{{chat.face}}">
-        <h2>{{chat.name}}</h2>
-        <p>{{chat.lastText}}</p>-->
-        
-            <!--<ion-item ng-repeat="contact in contacts">
-               {{contact.displayName}} 
-                {{contact.phoneNumbers[0].value}}
-               {{contact.emails[0].value}} 
-            </ion-item>-->
-
-        <!--<i class="icon ion-chevron-right icon-accessory"></i>
-
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
-          Delete
-        </ion-option-button>-->
-        <!--</ion-item>-->
-    <!--</ion-list>-->
   </ion-content>
 </ion-view>
