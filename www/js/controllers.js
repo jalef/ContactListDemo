@@ -6,18 +6,21 @@ angular.module('contactListApp.controllers', [])
       $cordovaBatteryStatus,
       $cordovaDevice,
       $cordovaContacts,
-      $localstorage) {
+      $localstorage,
+      $settings,
+      $ionicLoading) {
      
-    var tempLocalstorage=$localstorage.get('firstName');
-    console.log("logged");
-    $scope.firstName=(tempLocalstorage?
-        tempLocalstorage:
-        "Guest");
-        
-    tempLocalstorage=$localstorage.get('bgColor');
-    $scope.bgColor=(tempLocalstorage?    
-       tempLocalstorage:
-       "white" );
+    var waitingOnCallbackItems=0;
+    
+    function hideSpinner(){
+       waitingOnCallbackItems--;
+      if (waitingOnCallbackItems===0) {
+        $ionicLoading.hide();
+      }
+    }
+    
+    
+    
     
     $scope.refreshSettings=function() {
       $scope.firstName= $localstorage.get('firstName');
@@ -26,6 +29,16 @@ angular.module('contactListApp.controllers', [])
     $scope.contactsCount=0;
     
     $ionicPlatform.ready(function() {
+      $ionicLoading.show({
+        template: '<p>Loading...</p><ion-spinner></ion-spinner>'
+      });  
+      
+      var tempLocalstorage=$localstorage.get('firstName');
+      
+      $scope.firstName=(tempLocalstorage?
+        tempLocalstorage:
+        "Guest");
+        
       $rootScope.$on("$cordovaBatteryStatus:status",
         function(event, args){
           $scope.batteryLevel = args.level;
@@ -36,18 +49,23 @@ angular.module('contactListApp.controllers', [])
       $scope.platform = $cordovaDevice.getPlatform();  
       
       var opts = {                                           
-        filter : ''              
+        filter : '' , 
+        hasPhoneNumber:true            
       };
-  
-      //if ($ionicPlatform.isAndroid()) {
-        opts.hasPhoneNumber = true;         //hasPhoneNumber only works for android.
-      //};
+      waitingOnCallbackItems++;
       $cordovaContacts.find(opts).then(function(result) {
-          $scope.contactsCount = result.length;     
+        $scope.contactsCount = result.length;   
+        hideSpinner();  
       }, function(error) {
-        debugger
-          console.log("ERROR: " + error);
-      });        
+        console.log("ERROR: " + error);
+        hideSpinner();
+      }); 
+      
+      waitingOnCallbackItems++;
+      $settings.readSetting('bgColor', function(value) {
+        $scope.bgColor=(value? value:"white" ); 
+        hideSpinner();    
+      });       
     }); 
 })
 
@@ -56,12 +74,10 @@ angular.module('contactListApp.controllers', [])
     $cordovaContacts,
     $ionicPlatform) {
       var opts = {                                           
-        filter : ''              
+        filter : '' ,
+        hasPhoneNumber:true             
       };
-  
-      //if ($ionicPlatform.isAndroid()) {
-        opts.hasPhoneNumber = true;         //hasPhoneNumber only works for android.
-      //};
+
       $cordovaContacts.find(opts).then(function(result) {
           $scope.contacts = result;
       }, function(error) {
@@ -69,6 +85,7 @@ angular.module('contactListApp.controllers', [])
           console.log("ERROR: " + error);
       });
 })
+
 
 .controller('SettingsCtrl', function($scope,
   $localstorage,

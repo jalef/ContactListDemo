@@ -96,7 +96,7 @@ angular.module('contactListApp.services', [])
 
         callback(res.rows.item(0).value);
       } else {
-        callback("setting " + name + " is empty");
+        callback(undefined);
       }
     });
   }
