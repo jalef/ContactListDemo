@@ -88,34 +88,34 @@ angular.module('contactListApp.controllers', [])
     // $localstorage.set('firstName', $scope.firstName); 
     $localstorage.set('firstName', this.firstName); 
      //$localstorage.set('bgColor', this.bgColor);
+    var newName=this.firstName;
+    var newBgColor=this.bgColor;
      
-     $scope.select = function(lastname) {
-        var query = "SELECT 1 FROM settings WHERE name = ?";
-        
-        $cordovaSQLite.execute(db, query, ['bgColor']).then(function(res) {
-            if(res.rows.length > 0) {
-              console.log("SELECTED -> " + res.rows.item(0).name + " " 
-                          + res.rows.item(0).value);
-                var update="UPDATE settings SET value=? WHERE name=?";
-                $cordovaSQLite.execute(db, update, 
-                  ["bgColor", this.bgColor]).then(function(res) {
+  //  var query3 = "delete FROM settings";
+  //   $cordovaSQLite.execute(db, query3);
+    var query = "SELECT * FROM settings WHERE name = ?";
+    console.log(query);
+    $cordovaSQLite.execute(db, query, ['bgColor']).then(function(res) {
+        if(res.rows.length > 0) {
+          console.log("SELECTED -> " + res.rows.item(0).name + " " 
+                      + res.rows.item(0).value);
+            var update="UPDATE settings SET value=? WHERE name=?";
+            $cordovaSQLite.execute(db, update,[ newBgColor,"bgColor"])
+        } else {
+          var insert = "INSERT INTO settings (name, value) VALUES (?,?)";
+          console.log(insert);
+          $cordovaSQLite.execute(db, insert, ["bgColor", newBgColor]).then(function(res) {
+              console.log("INSERT ID -> " + res.insertId);
+          }, function (err) {
+              debugger
+              console.error(err);
+          });
+        }
+    }, function (err) {
+        debugger
+        console.error(err);
+    });
     
-                }, function (err) {
-                    console.error(err);
-                });
-                 
-            } else {
-              var insert = "INSERT INTO settings (name, value) VALUES (?,?)";
-              $cordovaSQLite.execute(db, insert, ["bgColor", this.bgColor]).then(function(res) {
-                  console.log("INSERT ID -> " + res.insertId);
-              }, function (err) {
-                  console.error(err);
-              });
-            }
-        }, function (err) {
-            console.error(err);
-        });
-    }
      
      
 
