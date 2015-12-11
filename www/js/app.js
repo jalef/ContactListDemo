@@ -26,7 +26,7 @@ angular.module('contactListApp',
       StatusBar.styleDefault();
     }
     
-    db = $cordovaSQLite.openDB("cl.db");
+    db = $cordovaSQLite.openDB("contactList.db");
     $cordovaSQLite.execute(db, 
     "CREATE TABLE IF NOT EXISTS settings (id integer primary key,name text,value text)");  
   });

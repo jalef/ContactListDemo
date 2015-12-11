@@ -36,7 +36,14 @@ angular.module('contactListApp.controllers', [])
       $scope.model = $cordovaDevice.getModel();  
       $scope.platform = $cordovaDevice.getPlatform();  
       
-      $cordovaContacts.contacts.find({hasPhoneNumber:true}).then(function(result) {
+      var opts = {                                           
+        filter : ''              
+      };
+  
+      //if ($ionicPlatform.isAndroid()) {
+        opts.hasPhoneNumber = true;         //hasPhoneNumber only works for android.
+      //};
+      $cordovaContacts.find(opts).then(function(result) {
           $scope.contactsCount = result.length;     
       }, function(error) {
         debugger
