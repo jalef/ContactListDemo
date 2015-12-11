@@ -9,7 +9,11 @@ angular.module('contactListApp.controllers', [])
       $localstorage,
       $settings,
       $ionicLoading) {
-     
+    
+    $ionicLoading.show({
+      template: '<p>Loading...</p><ion-spinner></ion-spinner>'
+    }); 
+      
     var waitingOnCallbackItems=0;
     
     function hideSpinner(){
@@ -18,21 +22,14 @@ angular.module('contactListApp.controllers', [])
         $ionicLoading.hide();
       }
     }
-    
-    
-    
-    
+
     $scope.refreshSettings=function() {
       $scope.firstName= $localstorage.get('firstName');
     }
     
     $scope.contactsCount=0;
     
-    $ionicPlatform.ready(function() {
-      $ionicLoading.show({
-        template: '<p>Loading...</p><ion-spinner></ion-spinner>'
-      });  
-      
+    $ionicPlatform.ready(function() {  
       var tempLocalstorage=$localstorage.get('firstName');
       
       $scope.firstName=(tempLocalstorage?
@@ -72,17 +69,24 @@ angular.module('contactListApp.controllers', [])
 
 .controller('ContactsCtrl',function($scope, 
     $cordovaContacts,
-    $ionicPlatform) {
+    $ionicPlatform,
+    $ionicLoading) {
+      
+       $ionicLoading.show({
+          template: '<p>Loading...</p><ion-spinner></ion-spinner>'
+      });
       var opts = {                                           
         filter : '' ,
         hasPhoneNumber:true             
       };
 
       $cordovaContacts.find(opts).then(function(result) {
-          $scope.contacts = result;
+        $scope.contacts = result;
+        $ionicLoading.hide();
       }, function(error) {
-          debugger
-          console.log("ERROR: " + error);
+          
+        console.log("ERROR: " + error);
+        $ionicLoading.hide();
       });
 })
 
@@ -92,12 +96,14 @@ angular.module('contactListApp.controllers', [])
   $settings,
   $ionicLoading) {
     
-  $scope.firstName=$localstorage.get('firstName');
+  
 
   $ionicLoading.show({
       template: '<p>Loading...</p><ion-spinner></ion-spinner>'
   });
-    
+  
+  $scope.firstName=$localstorage.get('firstName');
+  
   $settings.readSetting('bgColor', function(value) {
     $scope.bgColor=value;  
     $ionicLoading.hide();
