@@ -12,7 +12,7 @@ angular.module('contactListApp',
        'contactListApp.services'
       ])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,$cordovaSQLite) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -25,6 +25,10 @@ angular.module('contactListApp',
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+    
+    db = $cordovaSQLite.openDB("cl.db");
+    $cordovaSQLite.execute(db, 
+    "CREATE TABLE IF NOT EXISTS settings (id integer primary key,name text,value text)");  
   });
 })
 .config(function($stateProvider, $urlRouterProvider) {
