@@ -57,43 +57,54 @@ angular.module('contactListApp.services', [])
     battery: batteryPercent   
   };
 })
+
+
 .factory('$settings',function($cordovaSQLite)
 {
   var save=function(name,value){
+    var query = "SELECT * FROM settings WHERE name = ?";
     
-  };
-  
-  var read=function(name){
-    var query="SELECT value FROM settings WHERE name=?";
-    $cordovaSQLite.execute(db, query, name).then(function(res) {
-      if(res.rows.length > 0) {
+    $cordovaSQLite.execute(db, query, [name]).then(function(res) {
+        if(res.rows.length > 0) {
           console.log("SELECTED -> " + res.rows.item(0).name + " " 
                       + res.rows.item(0).value);
-          return res.rows.item(0).value;
+          var update="UPDATE settings SET value=? WHERE name=?";
+          $cordovaSQLite.execute(db, update,[ value,name]);
         } else {
-          return "setting " + name + " is empty";
+          var insert = "INSERT INTO settings (name, value) VALUES (?,?)";
+          $cordovaSQLite.execute(db, insert, [name, value]).then(function(res) {
+              console.log("INSERT ID -> " + res.insertId);
+          }, function (err) {
+              console.error(err);
+          });
         }
+    }, function (err) {
+        console.error(err);
     });
   };
   
-  return {
-    saveSetting:save,
-    readSetting:function(name, callback){
+  var read=function(name, callback){
     var query="SELECT value FROM settings WHERE name=?";  
     
     $cordovaSQLite.execute(db, query, [name]).then(function(res) {
       if(res.rows.length > 0) {
-          console.log("read : SELECTED -> " + res.rows.item(0).name + " " 
+        console.log("read : SELECTED -> " + res.rows.item(0).name + " " 
                       + res.rows.item(0).value);
 
-          callback(res.rows.item(0).value);
-        } else {
-          callback("setting " + name + " is empty");
-        }
-    })
+        callback(res.rows.item(0).value);
+      } else {
+        callback("setting " + name + " is empty");
+      }
+    });
   }
-};
+  
+  return {
+    saveSetting:save,
+    readSetting:read
+  };
 })
+
+
 .factory('$localstorage', ['$window', function($window) {
   return {
     set: function(key, value) {

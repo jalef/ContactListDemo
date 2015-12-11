@@ -92,26 +92,8 @@ angular.module('contactListApp.controllers', [])
     var newBgColor=this.bgColor;
 
     $localstorage.set('firstName', newName); 
-
-    var query = "SELECT * FROM settings WHERE name = ?";
+    $settings.saveSetting('bgColor',newBgColor);
     
-    $cordovaSQLite.execute(db, query, ['bgColor']).then(function(res) {
-        if(res.rows.length > 0) {
-          console.log("SELECTED -> " + res.rows.item(0).name + " " 
-                      + res.rows.item(0).value);
-          var update="UPDATE settings SET value=? WHERE name=?";
-          $cordovaSQLite.execute(db, update,[ newBgColor,"bgColor"]);
-        } else {
-          var insert = "INSERT INTO settings (name, value) VALUES (?,?)";
-          $cordovaSQLite.execute(db, insert, ["bgColor", newBgColor]).then(function(res) {
-              console.log("INSERT ID -> " + res.insertId);
-          }, function (err) {
-              console.error(err);
-          });
-        }
-    }, function (err) {
-        console.error(err);
-    });
   }
 
 });
