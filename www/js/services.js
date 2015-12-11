@@ -61,26 +61,29 @@ angular.module('contactListApp.services', [])
 
 .factory('$settings',function($cordovaSQLite)
 {
-  var save=function(name,value){
+  var save=function(name,value,callback){
     var query = "SELECT * FROM settings WHERE name = ?";
     
     $cordovaSQLite.execute(db, query, [name]).then(function(res) {
-        if(res.rows.length > 0) {
-          console.log("SELECTED -> " + res.rows.item(0).name + " " 
-                      + res.rows.item(0).value);
-          var update="UPDATE settings SET value=? WHERE name=?";
-          $cordovaSQLite.execute(db, update,[ value,name]);
-        } else {
-          var insert = "INSERT INTO settings (name, value) VALUES (?,?)";
-          $cordovaSQLite.execute(db, insert, [name, value]).then(function(res) {
-              console.log("INSERT ID -> " + res.insertId);
-          }, function (err) {
-              console.error(err);
-          });
-        }
+      if(res.rows.length > 0) {
+        console.log("SELECTED -> " + res.rows.item(0).name + " " 
+                    + res.rows.item(0).value);
+        var update="UPDATE settings SET value=? WHERE name=?";
+        $cordovaSQLite.execute(db, update,[ value,name]);
+      } else {
+        var insert = "INSERT INTO settings (name, value) VALUES (?,?)";
+        $cordovaSQLite.execute(db, insert, [name, value]).then(function(res) {
+            console.log("INSERT ID -> " + res.insertId);
+        }, function (err) {
+            console.error(err);
+        });
+      }
+      callback();
     }, function (err) {
-        console.error(err);
+      console.error(err);
+      callback();
     });
+    
   };
   
   var read=function(name, callback){

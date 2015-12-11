@@ -72,7 +72,6 @@ angular.module('contactListApp.controllers', [])
 
 .controller('SettingsCtrl', function($scope,
   $localstorage,
-  $cordovaSQLite,
   $settings,
   $ionicLoading) {
     
@@ -90,9 +89,14 @@ angular.module('contactListApp.controllers', [])
   $scope.saveSettings=function(){
     var newName=this.firstName;
     var newBgColor=this.bgColor;
-
+    $ionicLoading.show({
+        template: '<p>Saving...</p><ion-spinner></ion-spinner>'
+    });
     $localstorage.set('firstName', newName); 
-    $settings.saveSetting('bgColor',newBgColor);
+    $settings.saveSetting('bgColor',newBgColor,function()
+    {
+      $ionicLoading.hide();
+    });
     
   }
 
