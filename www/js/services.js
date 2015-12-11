@@ -57,6 +57,43 @@ angular.module('contactListApp.services', [])
     battery: batteryPercent   
   };
 })
+.factory('$settings',function($cordovaSQLite)
+{
+  var save=function(name,value){
+    
+  };
+  
+  var read=function(name){
+    var query="SELECT value FROM settings WHERE name=?";
+    $cordovaSQLite.execute(db, query, name).then(function(res) {
+      if(res.rows.length > 0) {
+          console.log("SELECTED -> " + res.rows.item(0).name + " " 
+                      + res.rows.item(0).value);
+          return res.rows.item(0).value;
+        } else {
+          return "setting " + name + " is empty";
+        }
+    });
+  };
+  
+  return {
+    saveSetting:save,
+    readSetting:function(name, callback){
+    var query="SELECT value FROM settings WHERE name=?";  
+    
+    $cordovaSQLite.execute(db, query, [name]).then(function(res) {
+      if(res.rows.length > 0) {
+          console.log("read : SELECTED -> " + res.rows.item(0).name + " " 
+                      + res.rows.item(0).value);
+
+          callback(res.rows.item(0).value);
+        } else {
+          callback("setting " + name + " is empty");
+        }
+    })
+  }
+};
+})
 .factory('$localstorage', ['$window', function($window) {
   return {
     set: function(key, value) {

@@ -70,9 +70,16 @@ angular.module('contactListApp.controllers', [])
       });
 })
 
-.controller('SettingsCtrl', function($scope,$localstorage,$cordovaSQLite) {
+.controller('SettingsCtrl', function($scope,
+  $localstorage,
+  $cordovaSQLite,
+  $settings) {
   $scope.firstName=$localstorage.get('firstName');
-
+  
+  $settings.readSetting('bgColor', function(value) {
+    $scope.bgColor=value;  
+  });
+ 
   $scope.saveSettings=function(){
     var newName=this.firstName;
     var newBgColor=this.bgColor;

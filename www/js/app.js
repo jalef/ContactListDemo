@@ -67,15 +67,6 @@ angular.module('contactListApp',
         }
       }
     })
-    // .state('tab.chat-detail', {
-    //   url: '/chats/:chatId',
-    //   views: {
-    //     'tab-chats': {
-    //       templateUrl: 'templates/chat-detail.html',
-    //       controller: 'ChatDetailCtrl'
-    //     }
-    //   }
-    // })
 
   .state('tab.settings', {
     url: '/settings',//qq:why we give /settings and not tab/settings
