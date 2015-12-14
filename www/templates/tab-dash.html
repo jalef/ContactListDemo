@@ -1,50 +1,41 @@
 <ion-view  cache-view="false"" view-title="Dashboard">
   <ion-content class="padding" 
       style="background-color:{{bgColor}}">
-    <div>
+    <div class="list">
       <div class="item item-divider">Welcome {{firstName}}</div>
 
-      <div class="list card">    
-        <div class="item item-divider">Battery Status</div>
-        <div class="item item-body">
-          <div>
-            <p>
-              Your battery level is  <b>{{batteryLevel}} %</b>.
-            </p>
-            <p ng-show="battery.level<=15 && !isPluggedIn">
-              You might want to connect your charger!
-            </p>
-            <p ng-show="isPluggedIn">
-              Your phone is charging right now!
-            </p>
-          </div>
-        </div>
+       
+      <div class="item item-divider">
+        Battery Status
       </div>
-      
-      <div class="list card">
-        <div class="item item-divider">Device Information</div>
-        <div class="item item-body">
-          <div>
-            <p>
-              Your device model is  <b>{{model}}</b>.
-            </p>
-            <p>
-              You are running on  <b>{{platform }}</b> platform.
-            </p>
-          </div>
-        </div>
+      <div class="item item-body">
+          Your battery level is  <b>{{batteryLevel}} %</b>.
+      </div>
+      <div class="item item-body"
+          ng-show="battery.level<=15 && !isPluggedIn">
+          You might want to connect your charger!
+      </div>
+      <div class="item item-body"> 
+        Your phone is charging right now!
+      </div>
+  
+      <div class="item item-divider">
+        Device Information
+      </div>
+      <div class="item item-body">   
+        Your device model is  <b>{{model}}</b>.
+      </div>
+      <div class="item item-body">
+        You are running on  <b>{{platform }}</b> platform.
       </div>
     
-      <div class="list card">
-        <div class="item item-divider">Contacts</div>
-        <div class="item item-body">
-          <div>
-            <p>
-              Your have <b>{{contactsCount}}</b> contacts in your device.
-            </p>           
-          </div>
-        </div>
+      <div class="item item-divider">
+        Contacts
       </div>
+      <div class="item item-body">
+        Your have <b>{{contactsCount}}</b> contacts in your device.
+      </div>
+      
     </div>
   </ion-content>
 </ion-view>
