@@ -1,5 +1,6 @@
 <ion-view view-title="Settings">
-  <ion-content>
+  <ion-content class="padding" 
+      style="background-color:{{bgColor}}">
     <form ng-submit="saveSettings()">
       <div class="list">
         <label class="item item-input">
@@ -15,11 +16,10 @@
             Background color:
           </div>
           <select ng-model="bgColor">
-            <option value="blue">Blue</option>
-            <option value="green">Green</option>
-            <option value="white">White</option>
-            <option value="red">Red</option>
-            <option value="yellow">Yellow</option>
+            <option value="{{color.value}}"
+                ng-repeat="color in colors">     
+              {{color.name}}           
+            </option>
           </select>
         </label>
   

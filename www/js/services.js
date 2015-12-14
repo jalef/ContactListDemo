@@ -59,6 +59,7 @@ angular.module('contactListApp.services', [])
 })
 
 
+
 .factory('$settings',function($cordovaSQLite)
 {
   var save=function(name,value,callback){
@@ -101,10 +102,19 @@ angular.module('contactListApp.services', [])
     });
   }
   
+  var colorList=[
+    {value:"#7FA2E2", name:"Blue"},
+    {value:"#AF848B", name:"Purple"},
+    {value:"#CCC086", name:"Yellow"},
+    {value:"#849D64", name:"Green"},
+    {value:"#8C8374", name:"Brown"},
+  ]
   return {
     saveSetting:save,
-    readSetting:read
+    readSetting:read,
+    colorList:colorList
   };
+  
 })
 
 

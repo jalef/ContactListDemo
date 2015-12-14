@@ -92,17 +92,17 @@ angular.module('contactListApp.controllers', [])
 
 
 .controller('SettingsCtrl', function($scope,
-  $localstorage,
-  $settings,
-  $ionicLoading) {
-    
-  
+    $localstorage,
+    $settings,
+    $ionicLoading) {
 
   $ionicLoading.show({
       template: '<p>Loading...</p><ion-spinner></ion-spinner>'
   });
   
   $scope.firstName=$localstorage.get('firstName');
+  
+  $scope.colors=$settings.colorList;
   
   $settings.readSetting('bgColor', function(value) {
     $scope.bgColor=value;  

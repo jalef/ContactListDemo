@@ -1,4 +1,4 @@
-<ion-view  cache-view="false"" view-title="Dashboard">
+<ion-view  cache-view="false" view-title="Dashboard">
   <ion-content class="padding" 
       style="background-color:{{bgColor}}">
     <div class="list">
@@ -8,31 +8,31 @@
       <div class="item item-divider">
         Battery Status
       </div>
-      <div class="item item-body">
+      <div class="item">
           Your battery level is  <b>{{batteryLevel}} %</b>.
       </div>
-      <div class="item item-body"
+      <div class="item"
           ng-show="battery.level<=15 && !isPluggedIn">
           You might want to connect your charger!
       </div>
-      <div class="item item-body"> 
+      <div class="item"> 
         Your phone is charging right now!
       </div>
   
       <div class="item item-divider">
         Device Information
       </div>
-      <div class="item item-body">   
+      <div class="item">   
         Your device model is  <b>{{model}}</b>.
       </div>
-      <div class="item item-body">
+      <div class="item">
         You are running on  <b>{{platform }}</b> platform.
       </div>
     
       <div class="item item-divider">
         Contacts
       </div>
-      <div class="item item-body">
+      <div class="item">
         Your have <b>{{contactsCount}}</b> contacts in your device.
       </div>
       
