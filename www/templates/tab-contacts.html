@@ -4,7 +4,8 @@
       <div class="item item-avatar-right" 
           ng-repeat="contact in contacts">
           
-        <img src="http://api.adorable.io/avatars/40/fghjkewropesrop"/>
+        <!--<img src="http://api.adorable.io/avatars/40/fghjkewropesrop"/>-->
+        <img ng-src="{{contact.photos[0].value}}" src="img/ic_contact_picture.png"/>
         <h2>{{contact.displayName}}</h2>
         <p ng-bind="contact.phoneNumbers[0].value|| 'No phone number'">
         </p>
