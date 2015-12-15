@@ -15,14 +15,11 @@
           <div class="input-label">
             Background color:
           </div>
-          <select ng-model="bgColor">
-            <option value="{{color.value}}"
-                ng-repeat="color in colors">     
-              {{color.name}}           
-            </option>
+          <select ng-model="bgColor" 
+                  ng-options="color.value as color.name 
+                  for color in colors">
           </select>
         </label>
-  
       </div> 
       
       <button type="submit" class="button button-full button-stable">
