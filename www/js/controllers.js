@@ -7,7 +7,7 @@ angular.module('contactListApp.controllers', [])
       $cordovaDevice,
       $cordovaContacts,
       localstorage,
-      $settings,
+      settings,
       $ionicLoading) {
     
     $ionicLoading.show({
@@ -59,7 +59,7 @@ angular.module('contactListApp.controllers', [])
       }); 
       
       waitingOnCallbackItems++;
-      $settings.readSetting('bgColor', function(value) {
+      settings.readSetting('bgColor', function(value) {
         $scope.bgColor=(value? value:"white" ); 
         hideSpinner();    
       });       
@@ -93,7 +93,7 @@ angular.module('contactListApp.controllers', [])
 
 .controller('SettingsCtrl', function($scope,
     localstorage,
-    $settings,
+    settings,
     $ionicLoading) {
 
   $ionicLoading.show({
@@ -102,9 +102,9 @@ angular.module('contactListApp.controllers', [])
   
   $scope.firstName=localstorage.get('firstName');
   
-  $scope.colors=$settings.colorList;
+  $scope.colors=settings.colorList;
   
-  $settings.readSetting('bgColor', function(value) {
+  settings.readSetting('bgColor', function(value) {
     $scope.bgColor=value;  
     $ionicLoading.hide();
   });
@@ -116,7 +116,7 @@ angular.module('contactListApp.controllers', [])
         template: '<p>Saving...</p><ion-spinner></ion-spinner>'
     });
     localstorage.set('firstName', newName); 
-    $settings.saveSetting('bgColor',newBgColor,function()
+    settings.saveSetting('bgColor',newBgColor,function()
     {
       $ionicLoading.hide();
     });

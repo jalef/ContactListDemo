@@ -60,7 +60,7 @@ angular.module('contactListApp.services', [])
 
 
 
-.factory('$settings',function($cordovaSQLite)
+.factory('settings',function($cordovaSQLite)
 {
   var save=function(name,value,callback){
     var query = "SELECT * FROM settings WHERE name = ?";
