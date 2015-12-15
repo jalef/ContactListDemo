@@ -6,7 +6,7 @@ angular.module('contactListApp.controllers', [])
       $cordovaBatteryStatus,
       $cordovaDevice,
       $cordovaContacts,
-      $localstorage,
+      localstorage,
       $settings,
       $ionicLoading) {
     
@@ -24,13 +24,13 @@ angular.module('contactListApp.controllers', [])
     }
 
     $scope.refreshSettings=function() {
-      $scope.firstName= $localstorage.get('firstName');
+      $scope.firstName= localstorage.get('firstName');
     }
     
     $scope.contactsCount=0;
     
     $ionicPlatform.ready(function() {  
-      var tempLocalstorage=$localstorage.get('firstName');
+      var tempLocalstorage=localstorage.get('firstName');
       
       $scope.firstName=(tempLocalstorage?
         tempLocalstorage:
@@ -92,7 +92,7 @@ angular.module('contactListApp.controllers', [])
 
 
 .controller('SettingsCtrl', function($scope,
-    $localstorage,
+    localstorage,
     $settings,
     $ionicLoading) {
 
@@ -100,7 +100,7 @@ angular.module('contactListApp.controllers', [])
       template: '<p>Loading...</p><ion-spinner></ion-spinner>'
   });
   
-  $scope.firstName=$localstorage.get('firstName');
+  $scope.firstName=localstorage.get('firstName');
   
   $scope.colors=$settings.colorList;
   
@@ -115,7 +115,7 @@ angular.module('contactListApp.controllers', [])
     $ionicLoading.show({
         template: '<p>Saving...</p><ion-spinner></ion-spinner>'
     });
-    $localstorage.set('firstName', newName); 
+    localstorage.set('firstName', newName); 
     $settings.saveSetting('bgColor',newBgColor,function()
     {
       $ionicLoading.hide();
