@@ -1,18 +1,25 @@
 <ion-view view-title="Contacts">
   <ion-content>
-    <div class="list card" ng-repeat="contact in contacts">
-      <div class="item item-divider">{{contact.displayName}} </div>
-      <div class="item item-body"><!--qq this or ion-item?-->
-        <div>
-          {{contact.phoneNumbers.length}}
-          <p ng-show="contact.phoneNumbers[0]">
-            
-            <b>Phone Number :</b> {{contact.phoneNumbers[0].value}}
-          </p>
-          <p ng-show="contact.emails[0]">
-            <b>e-mail : </b> {{contact.emails[0].value}} 
-          </p>
-        </div>
+    <div class="list">
+      <div class="item item-avatar-right" 
+          ng-repeat="contact in contacts">
+          
+        <img src="http://api.adorable.io/avatars/40/fghjkewropesrop"/>
+        <h2>{{contact.displayName}}</h2>
+        <p ng-show="contact.phoneNumbers[0]">
+          {{contact.phoneNumbers[0].value}}
+        </p>
+        <p ng-show="!contact.phoneNumbers[0]">
+          No phone number
+        </p>
+        <p ng-show="contact.emails[0]">
+          {{contact.emails[0].value}} 
+        </p>
+        <p ng-show="!contact.emails[0]">
+          No e-mail
+        </p>  
+
+        
       </div>
     </div>
   </ion-content>
