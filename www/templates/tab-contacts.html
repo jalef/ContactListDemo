@@ -6,19 +6,16 @@
           
         <img src="http://api.adorable.io/avatars/40/fghjkewropesrop"/>
         <h2>{{contact.displayName}}</h2>
-        <p ng-show="contact.phoneNumbers[0]">
-          {{contact.phoneNumbers[0].value}}
+        <p>
+          {{contact.phoneNumbers[0]?
+          contact.phoneNumbers[0].value:
+          "No phone number"}}
         </p>
-        <p ng-show="!contact.phoneNumbers[0]">
-          No phone number
+        <p>
+          {{contact.emails[0]?
+          contact.emails[0].value:
+          "No e-mail"}}
         </p>
-        <p ng-show="contact.emails[0]">
-          {{contact.emails[0].value}} 
-        </p>
-        <p ng-show="!contact.emails[0]">
-          No e-mail
-        </p>  
-
         
       </div>
     </div>
