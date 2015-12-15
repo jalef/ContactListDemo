@@ -6,15 +6,9 @@
           
         <img src="http://api.adorable.io/avatars/40/fghjkewropesrop"/>
         <h2>{{contact.displayName}}</h2>
-        <p>
-          {{contact.phoneNumbers[0]?
-          contact.phoneNumbers[0].value:
-          "No phone number"}}
+        <p ng-bind="contact.phoneNumbers[0].value|| 'No phone number'">
         </p>
-        <p>
-          {{contact.emails[0]?
-          contact.emails[0].value:
-          "No e-mail"}}
+        <p ng-bind="contact.emails[0].value||'No e-mail'">        
         </p>
         
       </div>
