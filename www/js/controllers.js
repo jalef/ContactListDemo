@@ -72,7 +72,7 @@ angular.module('contactListApp.controllers', [])
     $ionicPlatform,
     $ionicLoading) {
       
-       $ionicLoading.show({
+      $ionicLoading.show({
           template: '<p>Loading...</p><ion-spinner></ion-spinner>'
       });
       var opts = {                                           
@@ -88,8 +88,19 @@ angular.module('contactListApp.controllers', [])
         console.log("ERROR: " + error);
         $ionicLoading.hide();
       });
+      
+      $scope.delete = function(contact) {
+        $cordovaContacts.remove({"id": contact.id})
+          .then(function(result) {
+            console.log(JSON.stringify(result));
+            $scope.contacts.splice(
+              $scope.contacts.indexOf(contact), 1
+            );
+        }, function(error) {
+            console.log(error);
+        });
+      };
 })
-
 
 .controller('SettingsCtrl', function($scope,
     localstorage,
