@@ -1,53 +1,5 @@
 angular.module('contactListApp.services', [])
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
-
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
-
-  return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
-        }
-      }
-      return null;
-    }
-  };
-})//singleton
 .factory('DashService', function($cordovaDevice) {
   // Might use a resource here that returns a JSON array
 
@@ -57,8 +9,6 @@ angular.module('contactListApp.services', [])
     battery: batteryPercent   
   };
 })
-
-
 
 .factory('settings',function($cordovaSQLite)
 {
@@ -117,7 +67,6 @@ angular.module('contactListApp.services', [])
   
 })
 
-
 .factory('localstorage', ['$window', function($window) {
   return {
     set: function(key, value) {
@@ -133,4 +82,53 @@ angular.module('contactListApp.services', [])
       return JSON.parse($window.localStorage[key] || '{}');
     }
   }
-}]);
+}])
+.factory('ContactService', function($q,$cordovaContacts) {
+	var mockContactsMode=true;
+	
+	var get=mockContactsMode?
+			mockContacts($q):
+			cordovaContacts($cordovaContacts);	
+	return {
+	get:get
+	};
+});
+
+function mockContacts($q){
+	function make() {
+      var defer = $q.defer();
+      var contacts = [];
+	
+      for (var i = 0; i < 1000; i++) {
+        contacts.push({
+          displayName : "Contact " + i,
+          phoneNumbers : [i],
+          emails : ["contact" + i + "@contactlist.com"]
+          });
+          
+       if (i===999) {
+         defer.resolve(contacts);
+       }
+          
+      };
+      return defer.promise;
+  };
+  
+  return make();
+
+}
+
+function cordovaContacts($cordovaContacts)
+{
+	 var opts = {                                           
+        filter : '' ,
+        //hasPhoneNumber:true             
+	};
+	  
+	// $cordovaContacts.find(opts).then(function(result) {
+    //     return result;
+    //   }, function(error) {
+    //     return null;
+    // });
+	return $cordovaContacts.find(opts);
+}

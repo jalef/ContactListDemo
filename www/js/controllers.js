@@ -70,17 +70,27 @@ angular.module('contactListApp.controllers', [])
 .controller('ContactsCtrl',function($scope, 
     $cordovaContacts,
     $ionicPlatform,
-    $ionicLoading) {
+    $ionicLoading,
+    ContactService) {
       
       $ionicLoading.show({
           template: '<p>Loading...</p><ion-spinner></ion-spinner>'
       });
-      var opts = {                                           
-        filter : '' ,
-        hasPhoneNumber:true             
-      };
+//       var opts = {                                           
+//         filter : '' ,
+//         hasPhoneNumber:true             
+//       };
+// 
+//       $cordovaContacts.find(opts).then(function(result) {
+//         $scope.contacts = result;
+//         $ionicLoading.hide();
+//       }, function(error) {
+//           
+//         console.log("ERROR: " + error);
+//         $ionicLoading.hide();
+//       });
 
-      $cordovaContacts.find(opts).then(function(result) {
+      ContactService.get.then(function(result) {
         $scope.contacts = result;
         $ionicLoading.hide();
       }, function(error) {

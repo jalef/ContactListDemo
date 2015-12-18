@@ -9,16 +9,20 @@
         <div class="avatar-circle"></div>
         <div class="avatar-hider"></div>
         
-        <img class="item-image rated-avatar" ng-src="{{contact.photos[0].value}}"
+        <img class="item-image rated-avatar" 
+            ng-src="{{contact.photos[0].value}}"
             src="img/ic_contact_picture.png"/>
         
         <h2>{{contact.displayName}}</h2>
-        <p ng-bind="contact.phoneNumbers[0].value|| 'No phone number'">
+        <p ng-bind="contact.phoneNumbers[0].value|| 
+            'No phone number'">
         </p>
-        <p ng-bind="contact.emails[0].value||'No e-mail'">        
+        <p ng-bind="contact.emails[0].value||
+            'No e-mail'">        
         </p>
 
-        <ion-option-button class="button-assertive" ng-click="delete(contact)">
+        <ion-option-button class="button-assertive" 
+            ng-click="delete(contact)">
           Delete
         </ion-option-button>
         
